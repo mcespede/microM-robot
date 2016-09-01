@@ -1,3 +1,6 @@
+####################################
+#######      LIBRERIAS     #########
+####################################
 #include <microM.h>
 
 int motorIzq = 5;
@@ -9,17 +12,26 @@ int GNDDerch = 8;
 int leftSpeed = 0;
 int rightSpeed =0;
 
+####################################
+#######      SETUP         #########
+####################################
 
 void setup() {
  
  Serial.begin(9600);
  pinMode (7,OUTPUT);
  pinMode (8, OUTPUT);
+ 
 }
 
+####################################
+#######      MAIN LOOP     #########
+#################################### 
+
 void loop() {
+ 
 int tiempoAtras= 3000;
-int tiempoAdelante= 000;
+int tiempoAdelante= 1000;
 int tiempoIzquierda=1000;
 int tiempoApagado=5000;
  
@@ -34,16 +46,18 @@ int rightSpeed =80;
 
 izquierda ();
 delay (tiempoIzquierda);
-
 Stop ();
-
 delay (tiempoApagado);
 
 }
 
-void atras()
+####################################
+#######      METODOS       #########
+#################################### 
 
-{
+#######  ATRAS   ###########
+void atras(){
+ 
 int leftSpeed =100;
 int rightSpeed =100;
 
@@ -56,9 +70,9 @@ analogWrite(6,rightSpeed);
 delay (100);
 }
 
-void adelante()
-
-{
+#######  ADELANTE   ###########
+void adelante(){
+ 
 int leftSpeed =100;
 int rightSpeed =100;
 
@@ -69,9 +83,9 @@ digitalWrite (8,LOW);
 analogWrite(6,rightSpeed);
 }
 
-void izquierda()
-
-{
+#######  IZQUIERDA   ###########
+void izquierda(){
+ 
 int leftSpeed =100;
 int rightSpeed =100;
 
@@ -82,9 +96,9 @@ digitalWrite (8,LOW);
 analogWrite(6,rightSpeed);
 }
 
-void Stop()
-
-{
+#######  STOP   ###########
+void Stop(){
+ 
 static int leftSpeed =0;
 static int rightSpeed =0;
 
