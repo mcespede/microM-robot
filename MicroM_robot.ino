@@ -1,6 +1,6 @@
-####################################
+/*####################################
 #######      LIBRERIAS     #########
-####################################
+####################################*/
 #include <microM.h>
 
 int motorIzq = 5;
@@ -12,54 +12,73 @@ int GNDDerch = 8;
 int leftSpeed = 0;
 int rightSpeed =0;
 
-####################################
+int option;
+
+/*####################################
 #######      SETUP         #########
-####################################
+####################################*/
 
 void setup() {
- 
+  
+ microM.Setup(); // this must be called to initialize timer 2
  Serial.begin(9600);
  pinMode (7,OUTPUT);
  pinMode (8, OUTPUT);
+ Serial.println("Ready to receive IR commands");
  
 }
 
-####################################
+/*####################################
 #######      MAIN LOOP     #########
-#################################### 
+#################################### */
 
 void loop() {
  
-int tiempoAtras= 3000;
+int tiempoAtras= 1000;
 int tiempoAdelante= 1000;
 int tiempoIzquierda=1000;
-int tiempoApagado=5000;
- 
-int leftSpeed =80;
-int rightSpeed =80;
- 
-//atras();
-//delay (tiempoAtras);
+int tiempoApagado=3000;
+int tiempoDerecha=1000;
 
-//adelante ();
-//delay(tiempoAdelante);
+if (Serial.available()>0){
+    option=Serial.read();
+    
+    if(option=='a') {
+        atras();
+        delay (tiempoAtras);
+        Serial.println("Atras");
+    }
+    if(option=='b') {
+        adelante ();
+        delay(tiempoAdelante);
+        Serial.println("Adelante");
+    }
+    if(option=='i') {
+        izquierda ();
+        delay (tiempoIzquierda);
+        Serial.println("Izquierda");
+    }
+    if(option=='d') {
+        derecha ();
+        delay (tiempoDerecha);
+        Serial.println("Derecha");
+    }
+    if(option=='s') {
+        Stop ();
+        delay (tiempoApagado);
+        Serial.println("Alto");
+    }
+}}
 
-izquierda ();
-delay (tiempoIzquierda);
-Stop ();
-delay (tiempoApagado);
-
-}
-
-####################################
+/*####################################
 #######      METODOS       #########
-#################################### 
+#################################### */
 
-#######  ATRAS   ###########
+//#######  ATRAS   ###########
 void atras(){
  
-int leftSpeed =100;
-int rightSpeed =100;
+int leftSpeed =70;
+int rightSpeed =70;
 
 digitalWrite (7,HIGH);
 analogWrite(5,leftSpeed);
@@ -70,11 +89,11 @@ analogWrite(6,rightSpeed);
 delay (100);
 }
 
-#######  ADELANTE   ###########
+//######  ADELANTE   ###########
 void adelante(){
  
-int leftSpeed =100;
-int rightSpeed =100;
+int leftSpeed =70;
+int rightSpeed =70;
 
 digitalWrite (7,LOW);
 analogWrite(5,leftSpeed);
@@ -83,11 +102,11 @@ digitalWrite (8,LOW);
 analogWrite(6,rightSpeed);
 }
 
-#######  IZQUIERDA   ###########
+//#######  IZQUIERDA   ###########
 void izquierda(){
  
-int leftSpeed =100;
-int rightSpeed =100;
+int leftSpeed =70;
+int rightSpeed =70;
 
 digitalWrite (7,HIGH);
 analogWrite(5,leftSpeed);
@@ -96,7 +115,20 @@ digitalWrite (8,LOW);
 analogWrite(6,rightSpeed);
 }
 
-#######  STOP   ###########
+//#######  DERECHA   ###########
+void derecha(){
+ 
+int leftSpeed =70;
+int rightSpeed =70;
+
+digitalWrite (7,LOW);
+analogWrite(5,leftSpeed);
+
+digitalWrite (8,HIGH);
+analogWrite(6,rightSpeed);
+}
+
+//#######  STOP   ###########
 void Stop(){
  
 static int leftSpeed =0;
