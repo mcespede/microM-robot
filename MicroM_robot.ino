@@ -19,12 +19,13 @@ int option;
 ####################################*/
 
 void setup() {
-  
- microM.Setup(); // this must be called to initialize timer 2
+
+ microM.Setup();
+ 
  Serial.begin(9600);
+ Serial.println("Ready to receive IR commands");
  pinMode (7,OUTPUT);
  pinMode (8, OUTPUT);
- Serial.println("Ready to receive IR commands");
  
 }
 
@@ -40,35 +41,38 @@ int tiempoIzquierda=1000;
 int tiempoApagado=3000;
 int tiempoDerecha=1000;
 
-if (Serial.available()>0){
-    option=Serial.read();
+if(microM.ircommand>0){
+    Serial.print("\tIR command:");
+    Serial.println(microM.ircommand,DEC);
     
-    if(option=='a') {
+    if(microM.ircommand==123) {
         atras();
         delay (tiempoAtras);
-        Serial.println("Atras");
+        Serial.println("Atrás");
     }
-    if(option=='b') {
+    if(microM.ircommand==122) {
         adelante ();
         delay(tiempoAdelante);
         Serial.println("Adelante");
     }
-    if(option=='i') {
+    if(microM.ircommand==124) {
         izquierda ();
         delay (tiempoIzquierda);
         Serial.println("Izquierda");
     }
-    if(option=='d') {
+    if(microM.ircommand==125) {
         derecha ();
         delay (tiempoDerecha);
         Serial.println("Derecha");
     }
-    if(option=='s') {
+    if(microM.ircommand==12) {
         Stop ();
         delay (tiempoApagado);
         Serial.println("Alto");
     }
-}}
+}
+microM.ircommand=0;
+}
 
 /*####################################
 #######      METODOS       #########
